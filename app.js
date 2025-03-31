@@ -11,8 +11,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-
-//mongoose.connect("mongodb://0.0.0.0:27017/BlogPostDB");
 const databasePass = process.env.PASSWORD;
 mongoose.connect("mongodb+srv://admin-arbi:"+ databasePass +"@cluster0.bba81.mongodb.net/BlogPostDB");
 
@@ -137,6 +135,17 @@ app.get("/:customListName" , function(req , res){
 
 })
 
+const backendUrl = "https://todolist-v59w.onrender.com";
+const job = new cron.CronJob('*/14 * * * *', function(){
+  https.get(backendUrl, (res) => {
+    if (res.statusCode === 200){
+      console.log("server restarted")
+    }
+  }).on("error", (err) => {
+      console.log("error");
+  })
+})
+job.start();
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("Server started Succefully");
