@@ -138,7 +138,7 @@ app.get("/:customListName" , function(req , res){
 })
 
 const backendUrl = "https://todolist-v59w.onrender.com";
-const job = new cron.CronJob('*/14 * * * *', function(){
+const job = new cron.CronJob('*/10 * * * *', function(){
   https.get(backendUrl, (res) => {
     if (res.statusCode === 200){
       console.log("server restarted")
